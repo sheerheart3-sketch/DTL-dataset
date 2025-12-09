@@ -3,7 +3,7 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - python=3.10  # 推荐使用3.10版本，兼容性较好
+  - python=3.12  # 推荐使用3.10版本，兼容性较好
   - pip
   - pytorch  # 对应代码中的torch
   - tqdm
