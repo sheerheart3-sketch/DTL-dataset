@@ -128,6 +128,7 @@ dic = dict()
 dic["prompt"] = refuse_prom
 dic["category"] = refuse_lab
 
+os.makedirs('./safe_selection', exist_ok=True)
 with open(f'./safe_selection/{model}.json','w',encoding='utf-8') as f:
     json.dump(dic, f)
     
