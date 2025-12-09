@@ -3,12 +3,12 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - python=3.12  # 推荐使用3.10版本，兼容性较好
+  - python=3.12  
   - pip
-  - pytorch  # 对应代码中的torch
+  - pytorch  
   - tqdm
   - requests
   - pip:
-    - openai  # 代码中用于调用API
-    - datasets  # 代码中用于数据加载
-    - urllib3  # 代码中用于请求重试
+    - openai  
+    - datasets  
+    - urllib3  
