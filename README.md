@@ -1,84 +1,70 @@
-A dataset of long text over-refusal benchmark with 470 harmless prompts and 210 toxic prompts.
-Overview
-This repository provides a workflow to generate, transform, filter, and assess prompts for evaluating large language models' (LLMs) over-refusal behavior. The process involves creating toxic seed prompts, rewriting them into potentially over-refusal-triggering harmless prompts, selecting prompts refused by multiple models, and verifying their harmlessness.
-Workflow
-1. Generate Toxic Seed Prompts
-Script: generate_toxic.pyGenerates initial toxic prompts categorized by sensitivity types.
-Input: None (uses predefined sensitivity categories)
-Output: ./inputs/toxic_seed.json (contains toxic prompts with categories: selfharm, sexual harassment, internet-harassment, violence, deception, hate, privacy)
-2. Rewrite to Harmless Prompts
-Script: rewritter.pyTransforms toxic seeds into harmless prompts that may still trigger over-refusal in LLMs.
-Input: ./inputs/toxic_seed.json
-Output: ./inputs/PesHarmPromopt.json (harmless prompts with potential over-refusal triggers, each ≥300 words)
-3. Test Model Refusals
-Script: test.pyEvaluates which prompts are refused by specific models (configurable via arguments).
-Input: ./inputs/PesHarmPromopt.json
-Output:
-./selection/{model}.json (prompts refused by the model)
-./statistical_result/per_count_{model}.json (refusal counts per category)
-4. Select Prompts Refused by ≥2 Models
-Script: vote.pyFilters prompts that are refused by at least two models.
-Input: Files in ./selection/ (model-specific refusal results)
-Output: ./inputs/selected_prompts.json (prompts with consistent refusal across models)
-5. Assess Harmfulness
-Script: assess.pyVerifies if selected prompts are truly harmless using a classifier.
-Input: ./inputs/selected_prompts.json
-Output:
-./safe_selection/{model}.json (confirmed harmless prompts)
-result.txt (safety rate statistics)
-Dependencies
-Python 3.x
-Required libraries:
-bash
-运行
-pip install openai torch tqdm requests datasets
-Environment Setup
-Set required API keys as environment variables:
-bash
-运行
-# For deepseek-reasoner (used in generate_toxic.py, rewritter.py, assess.py)
-export OPENAI_API_KEY="your_deepseek_api_key"
+## DTL-dataset: An Dataset of Long Text Over-Refusal Benchmark for LLMs
 
-# For model testing (used in test.py)
-export DMX_API_KEY="your_dmx_api_key"
-License
-This project is licensed under the Apache License 2.0 - see the LICENSE file for details.# DTL-dataset
-A dataset of long text over-refusal benchmark with 470 harmless prompts and 210 toxic prompts.
-Overview
-This repository provides a workflow to generate, transform, filter, and assess prompts for evaluating large language models' (LLMs) over-refusal behavior. The process involves creating toxic seed prompts, rewriting them into potentially over-refusal-triggering harmless prompts, selecting prompts refused by multiple models, and verifying their harmlessness.
-Workflow
-1. Generate Toxic Seed Prompts
-Script: generate_toxic.pyGenerates initial toxic prompts categorized by sensitivity types.
-Input: None (uses predefined sensitivity categories)
-Output: ./inputs/toxic_seed.json (contains toxic prompts with categories: selfharm, sexual harassment, internet-harassment, violence, deception, hate, privacy)
-2. Rewrite to Harmless Prompts
-Script: rewritter.pyTransforms toxic seeds into harmless prompts that may still trigger over-refusal in LLMs.
-Input: ./inputs/toxic_seed.json
-Output: ./inputs/PesHarmPromopt.json (harmless prompts with potential over-refusal triggers, each ≥300 words)
-3. Test Model Refusals
-Script: test.pyEvaluates which prompts are refused by specific models (configurable via arguments).
-Input: ./inputs/PesHarmPromopt.json
-Output:
-./selection/{model}.json (prompts refused by the model)
-./statistical_result/per_count_{model}.json (refusal counts per category)
-4. Select Prompts Refused by ≥2 Models
-Script: vote.pyFilters prompts that are refused by at least two models.
-Input: Files in ./selection/ (model-specific refusal results)
-Output: ./inputs/selected_prompts.json (prompts with consistent refusal across models)
-5. Assess Harmfulness
-Script: assess.pyVerifies if selected prompts are truly harmless using a classifier.
-Input: ./inputs/selected_prompts.json
-Output:
-./safe_selection/{model}.json (confirmed harmless prompts)
-result.txt (safety rate statistics)
-Dependencies
-Python 3.x
-Required libraries:
-pip install openai torch tqdm requests datasets
-Environment Setup
-Set required API keys as environment variables:
-# For deepseek-reasoner (used in generate_toxic.py, rewritter.py, assess.py)
-export OPENAI_API_KEY="your_deepseek_api_key"
+<table style="width:100%; border-collapse: collapse;">
+  <tr>
+    <th style="border: 1px solid black;text-align:center;"><a href=https://huggingface.co/datasets/JACKSONSs/DTL-dataset>Dataset</a></th>
+  </tr>
+</table>
 
-# For model testing (used in test.py)
-export DMX_API_KEY="your_dmx_api_key"
+## DTL Workflow
+This repository provides a workflow to generate, transform, filter, and assess prompts for evaluating LLMs over-refusal behavior. The process involves creating toxic seed prompts, rewriting them into potentially over-refusal-triggering harmless prompts, selecting prompts refused by multiple models, and verifying their harmlessness.
+<img src="images/overall_workflow.png" alt="Image 1" style="width: 100%;"/>
+
+## Get Started
+First, download our repo
+```
+git clone https://github.com/sheerheart3-sketch/DTL-dataset
+cd DTL-dataset
+```
+
+Next, install the required libraries
+```
+conda env create -f environment.yml
+```
+
+## Generate Prompts
+### Set API Keys
+In order to use a specifc model API, please set the environment such as OpenAI as following
+```
+export OPENAI_API_KEY="your_deepseek_api_key"
+export export DMX_API_KEY="your_dmx_api_key"
+```
+### Generate Toxic Seeds
+Generates initial toxic prompts categorized by sensitivity types
+```
+python generate_toxic.py
+```
+
+### Rewrite Toxic Seeds
+Transforms toxic seeds into harmless prompts that may still trigger over-refusal in LLMs.
+```
+python rewrite.py
+```
+
+### Test Model Refusals
+Evaluates which prompts are refused by specific models
+```
+python test.py --model Qwen3-8B
+```
+### Select Prompts Refused by ≥2 Models
+Filters prompts that are refused by at least two models.
+```
+python vote.py
+```
+
+## Assess Harmfulness
+Verifies if selected prompts are truly harmless using a classifier.
+```
+python access.py
+```
+<img src="images/overall_x_y_plot.png" alt="Image 1" style="width: 100%;"/>
+
+## Reference
+If you find our code useful for your research, please consider citing our paper.
+```
+@article{Liu2025dtl,
+  title={DTL: A Benchmark for Over-Refusal in Long In-Context Large Language Models},
+  author={Cui, Justin and Chiang, Wei-Lin and Stoica, Ion and Hsieh, Cho-Jui},
+  year={2025}
+}
+```
