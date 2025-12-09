@@ -58,5 +58,6 @@ for type in range(len(sensetive)):
 dic=dict()
 dic["prompt"]=proms
 dic["category"]=categories
+os.makedirs('./inputs', exist_ok=True)
 with open('./inputs/toxic_seed.json', 'w', encoding='utf-8') as f: 
     json.dump(dic, f)
