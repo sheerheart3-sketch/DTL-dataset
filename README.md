@@ -1,20 +1,20 @@
-## DTL-dataset: An Dataset of Long Text Over-Refusal Benchmark for LLMs
+## LTO-dataset: An Dataset of Long Text Over-Refusal Benchmark for LLMs
 
 <table style="width:100%; border-collapse: collapse;">
   <tr>
-    <th style="border: 1px solid black;text-align:center;"><a href=https://huggingface.co/datasets/JACKSONSs/DTL-dataset>Dataset</a></th>
+    <th style="border: 1px solid black;text-align:center;"><a href=https://huggingface.co/datasets/JACKSONSs/LTO-dataset>Dataset</a></th>
   </tr>
 </table>
 
-## DTL Workflow
+## LTO Workflow
 This repository provides a workflow to generate, transform, filter, and assess prompts for evaluating LLMs over-refusal behavior. The process involves creating toxic seed prompts, rewriting them into potentially over-refusal-triggering harmless prompts, selecting prompts refused by multiple models, and verifying their harmlessness.
 <img src="images/overall_workflow.png" alt="Image 1" style="width: 100%;"/>
 
 ## Get Started
 First, download our repo
 ```
-git clone https://github.com/sheerheart3-sketch/DTL-dataset
-cd DTL-dataset
+git clone https://github.com/sheerheart3-sketch/LTO-dataset
+cd LTO-dataset
 ```
 
 Next, install the required libraries
@@ -62,8 +62,8 @@ python access.py
 ## Reference
 If you find our code useful for your research, please consider citing our paper.
 ```
-@article{Liu2025dtl,
-  title={DTL: A Benchmark for Over-Refusal in Long In-Context Large Language Models},
+@article{Liu2025LTO,
+  title={LTO: A Benchmark for Over-Refusal in Long In-Context Large Language Models},
   author={Cui, Justin and Chiang, Wei-Lin and Stoica, Ion and Hsieh, Cho-Jui},
   year={2025}
 }
